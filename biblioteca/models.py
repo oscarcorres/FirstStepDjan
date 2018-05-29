@@ -11,9 +11,9 @@ class Autor(models.Model):
                                   help_text="Segundo apellido (si procede)",
                                   null=True,
                                   blank=True)
-    nacimiento = models.DateField(verbose_name="Fecha de nacimiento", blank=True)
+    nacimiento = models.DateField(verbose_name="Fecha de nacimiento", blank=True, null=True)
     defuncion = models.DateField(verbose_name="Fecha de fallecimiento", null=True, blank=True)
-    libros = models.ManyToManyField('Libro')
+    libros = models.ManyToManyField('Libro', blank=True)
     # Función de conversión a cadena del objeto
     def __str__(self):
         if self.apellido_2 in (None, ''):
@@ -27,7 +27,7 @@ class Libro(models.Model):
     sinopsis = models.TextField(verbose_name="Sinopis del libro",
                                 blank=True,
                                 help_text="Breve resumen del argumento")
-    isbn = models.UUIDField(max_length=13)
+    isbn = models.CharField(max_length=13)
     autores = models.ManyToManyField('Autor',  blank=True)
     idioma = models.ForeignKey('Idioma', on_delete=models.SET_NULL, null=True, blank=True)
     genero = models.ForeignKey('Genero', on_delete=models.SET_NULL, null=True, blank=True)
