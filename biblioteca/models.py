@@ -6,14 +6,14 @@ class Autor(models.Model):
     nombre = models.CharField(max_length=100,
                               help_text="Nombre del autor")
     apellido_1 = models.CharField(max_length=100,
-                                  help_text="Apellido (el primero si hay más de uno)")
+                                  help_text="Apellido (el primero si hay más de uno)",null=True, blank=True)
     apellido_2 = models.CharField(max_length=100,
                                   help_text="Segundo apellido (si procede)",
                                   null=True,
                                   blank=True)
     nacimiento = models.DateField(verbose_name="Fecha de nacimiento", blank=True, null=True)
     defuncion = models.DateField(verbose_name="Fecha de fallecimiento", null=True, blank=True)
-    libros = models.ManyToManyField('Libro', blank=True)
+    libros = models.ManyToManyField('Libro',through="Escrito", blank=True)
     # Función de conversión a cadena del objeto
     def __str__(self):
         if self.apellido_2 in (None, ''):
@@ -28,12 +28,18 @@ class Libro(models.Model):
                                 blank=True,
                                 help_text="Breve resumen del argumento")
     isbn = models.CharField(max_length=13)
-    autores = models.ManyToManyField('Autor',  blank=True)
+    autores = models.ManyToManyField('Autor', through="Escrito",  blank=True, null=True)
     idioma = models.ForeignKey('Idioma', on_delete=models.SET_NULL, null=True, blank=True)
     genero = models.ForeignKey('Genero', on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return self.titulo
+
+class Escrito(models.Model):
+    libro = models.ForeignKey(Libro, on_delete=models.CASCADE)
+    autor = models.ForeignKey(Autor, on_delete=models.CASCADE)
+
+
 
 class Idioma(models.Model):
 
