@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Generos</title>
+</head>
+<body>
+    <h1>Listado de Generos</h1>
+    <ul>
+         {% for genero in object_list %}
+            <li><a href="{% url 'genero-detail'  genero.id %}">{{ genero.genero }}</a></li>
+         {% empty %}
+            <li>No hay Géneros todavía</li>
+         {% endfor %}
+    </ul>
+    <a href= "{% url 'indice' %}" class="btn btn-default">Página Inicial </a>
+    <a href= "{% url 'genero-create' %}" class="btn btn-default">Alta</a>
+</body>
+</html>

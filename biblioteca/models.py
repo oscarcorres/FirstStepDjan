@@ -1,19 +1,26 @@
 
 
 from django.db import models
+from django.urls import reverse
 
 class Autor(models.Model):
     nombre = models.CharField(max_length=100,
                               help_text="Nombre del autor")
     apellido_1 = models.CharField(max_length=100,
-                                  help_text="Apellido (el primero si hay más de uno)",null=True, blank=True)
+                                  help_text="Apellido (el primero si hay más de uno)",
+                                  null=True,
+                                  blank=True)
     apellido_2 = models.CharField(max_length=100,
                                   help_text="Segundo apellido (si procede)",
                                   null=True,
                                   blank=True)
-    nacimiento = models.DateField(verbose_name="Fecha de nacimiento", blank=True, null=True)
-    defuncion = models.DateField(verbose_name="Fecha de fallecimiento", null=True, blank=True)
-    libros = models.ManyToManyField('Libro',through="Escrito", blank=True)
+    nacimiento = models.DateField(verbose_name="Fecha de nacimiento",
+                                  blank=True,
+                                  null=True)
+    defuncion = models.DateField(verbose_name="Fecha de fallecimiento",
+                                 null=True,
+                                 blank=True)
+    libros = models.ManyToManyField('Libro', through="Escrito", blank=True)
     # Función de conversión a cadena del objeto
     def __str__(self):
         if self.apellido_2 in (None, ''):
@@ -58,3 +65,6 @@ class Genero(models.Model):
 
     def __str__(self):
         return self.genero
+
+    def get_absolute_url(self):
+        return reverse('genero-detail', kwargs={'pk': self.pk})
