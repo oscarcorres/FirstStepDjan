@@ -1,25 +1,36 @@
 <!DOCTYPE html>
 <html lang="es">
+{% extends 'biblioteca/base.html' %}
 <head>
     <meta charset="UTF-8">
     <title>Listado de Generos</title>
 </head>
-<body>
+{% block content %}
     <h1>Listado de Generos</h1>
-    <ul>
+    <div table-responsive>
+    <table class="table-striped table-hover">
+        <thead class="thead-dark">
+            <th width="250px">Denominación del genero</th>
+            <th colspan="2" align="centre">Acciones</th>
+        </thead>
          {% for genero in object_list %}
-            <li>
+            <tr>
+                <td class="info">
                 <a href="{% url 'genero-detail'  genero.id %}">{{ genero.genero }}</a>
-                &nbsp
-                <a href="{% url 'genero-update-form'  genero.id %}">Modificar</a>
-                &nbsp
-                <a href="{% url 'genero-delete'  genero.id %}">Borrar</a>
-            </li>
+                </td>
+                <td>
+                <a href="{% url 'genero-update-form'  genero.id %}" class="btn btn-warning">Modificar</a>
+                </td>
+                <td>
+                <a href="{% url 'genero-delete'  genero.id %}" class="btn btn-danger">Borrar</a>
+                </td>
+            </tr>
          {% empty %}
-            <li>No hay Géneros todavía</li>
+            <td>No hay Géneros todavía</td>
          {% endfor %}
-    </ul>
+    </table>
+    </div>
     <a href= "{% url 'indice' %}" class="btn btn-default">Página Inicial </a>
     <a href= "{% url 'genero-create' %}" class="btn btn-default">Alta</a>
-</body>
+{% endblock %}
 </html>
