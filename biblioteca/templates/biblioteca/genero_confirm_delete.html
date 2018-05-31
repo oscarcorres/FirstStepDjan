@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Borrar genero</h1>
+    <p><a href="{% url 'genero-list' %}"  class="btn btn-default">Volver al Listado</a> </p>
+    <h2>Formulario de Baja de Géneros</h2>
+    <form method="post">{% csrf_token %}
+        ¿Deseas borrar el genero: {{ object.genero }} ?
+        <input type="submit" value="Confirmar borrado"/>
+    </form>
+</body>
+</html>

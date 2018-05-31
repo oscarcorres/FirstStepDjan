@@ -1,7 +1,10 @@
 from django.http import HttpResponse
+from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
+from django.views.generic.edit import UpdateView
+from django.views.generic.edit import DeleteView
 from biblioteca.models import Genero
 
 
@@ -28,3 +31,16 @@ class GeneroCreate(CreateView):
 
     model = Genero
     fields = ['genero']
+
+
+class GeneroUpdate(UpdateView):
+
+    model = Genero
+    fields = ['genero']
+    template_name_suffix = '_update_form'
+
+
+class GeneroDelete(DeleteView):
+
+    model = Genero
+    success_url = reverse_lazy('genero-list')
